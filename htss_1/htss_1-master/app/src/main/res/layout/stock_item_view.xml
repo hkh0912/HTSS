@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5"
+        android:gravity="left"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:id="@+id/stock_name"
+        android:text="대인씨미디어"
+        android:textColor="@color/navy" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="right"
+        android:padding="10dp"
+        android:id="@+id/stock_current"
+        android:textSize="15sp"
+        android:text="26,300"
+        android:textColor="@color/navy" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="right"
+        android:textSize="15sp"
+        android:id="@+id/stock_value_minus"
+        android:padding="10dp"
+        android:text="-2.73%"
+        android:textColor="@color/orange" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:gravity="right"
+        android:textSize="15sp"
+        android:id="@+id/stock_value_plus"
+        android:padding="10dp"
+        android:visibility="gone"
+        android:text="+2.73%"
+        android:textColor="@color/navy" />
+
+</LinearLayout>

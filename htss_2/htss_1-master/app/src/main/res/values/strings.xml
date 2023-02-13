@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">HTSS</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="decoding_key">7W2VNBMSRpCg1zLE2GiKAxCvN0rIRodgqGf0xYlXzfzU0Vo2SOcSe9wHe5xunDnj+ZomDo0EkViG1vdcGUZqmg==</string>
+    <string name="encoding_key">7W2VNBMSRpCg1zLE2GiKAxCvN0rIRodgqGf0xYlXzfzU0Vo2SOcSe9wHe5xunDnj%2BZomDo0EkViG1vdcGUZqmg%3D%3D</string>
+</resources>
