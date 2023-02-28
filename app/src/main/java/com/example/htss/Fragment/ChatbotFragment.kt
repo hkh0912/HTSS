@@ -7,10 +7,13 @@ import com.example.htss.databinding.FragmentChatbotBinding
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.ChatbotAdapter
 import com.example.htss.Model.ChatbotMessageModel
+import com.example.htss.R
 import kotlinx.android.synthetic.main.fragment_chatbot.*
 import kotlinx.coroutines.*
 
