@@ -7,7 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.htss.Fragment.HomeFragment
-import com.example.htss.Fragment.SettingFragment
+import com.example.htss.Fragment.ChatbotFragment
 import com.example.htss.R
 import com.example.htss.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 //                replaceFragment(fragment)
 //                Log.d("framgent","category")
 //            }
-            R.id.settingFragment -> {
-                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, SettingFragment::class.java.name)
+            R.id.chatbotFragment -> {
+                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, ChatbotFragment::class.java.name)
                 replaceFragment(fragment)
-                Log.d("framgent","setting")
+                Log.d("framgent","chatbot")
             }
         }
         return false
