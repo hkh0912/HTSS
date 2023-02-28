@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.CategoryDetailListAdapter
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
+import com.example.htss.Model.StockListModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
 import com.example.htss.Retrofit.Model.SectorThemeIncludeList
@@ -23,6 +25,8 @@ import com.example.htss.databinding.FragmentCategoryDetailBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
+import kotlin.math.log
 
 
 class CategoryDetailFragment : Fragment(), View.OnClickListener {
@@ -30,7 +34,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     private lateinit var view: FragmentCategoryDetailBinding
     private val retrofit = RetrofitClient.create()
 
-    private val CategoryDetailList = mutableListOf<CategoryDetailListModel>()
+    private val CategoryDetailList = mutableListOf<StockListModel>()
 
     private var CategoryDetailNewsList = mutableListOf<NewsModel>()
 
@@ -39,6 +43,7 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
 
     private var categoryName = ""
     private var categoryPercent = ""
+    val dec = DecimalFormat("#,###.##")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,6 +76,12 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         view.recycleCategoryDetail2.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = categorydetailNewsAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.recycleCategoryDetail2.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
 
 
@@ -78,9 +89,10 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("stock_name", CategoryDetailList[position].CatagoryName)
-                    putString("stock_percent",CategoryDetailList[position].CatagoryPercent)
-                    putString("stock_price", CategoryDetailList[position].CatagoryPrice)
+                    putString("stock_ticker", CategoryDetailList[position].ticker)
+                    putString("stock_name", CategoryDetailList[position].StockName)
+                    putString("stock_percent",CategoryDetailList[position].StockPercent)
+                    putString("stock_price", CategoryDetailList[position].StockPrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }
@@ -88,6 +100,12 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         categorydetailNewsAdapter.setItemClickListener(object : MainNewsAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(CategoryDetailNewsList[position].rink)))
+            }
+        })
+
+        categorydetailNewsAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+               getStockNameByTicker(CategoryDetailNewsList[position].ticker)
             }
         })
 
@@ -104,6 +122,28 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
         getSectorThemeKeywordIncludeNews(categoryName,3)
 
         return view.root
+    }
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("categorydetailfragment",response.body().toString())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
     fun getSectorInclude(sector: String, num: Int){
         retrofit.getSectorInclude(sector, num).enqueue(object: Callback<SectorThemeIncludeList> {
@@ -125,22 +165,26 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
     }
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         CategoryDetailList.clear()
-        if(body != null){
+        if(body .isNullOrEmpty()){
+
+        }
+        else{
             for(item in body) {
                 if (item.rate >= 0.0) {
                     CategoryDetailList.add(
-                        CategoryDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             "+" + item.rate.toString() + "%"
                         )
                     )
-                }
-                else{
+                } else {
                     CategoryDetailList.add(
-                        CategoryDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            item.end_price.toString(),
+                            dec.format(item.end_price).toString(),
                             item.rate.toString() + "%"
                         )
                     )
@@ -148,6 +192,9 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
             }
         }
         categorydetailAdapter.notifyDataSetChanged()
+        if(CategoryDetailList.size < 3){
+            view.categoryDetailOpenBtn.visibility=View.GONE
+        }
     }
 
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
@@ -171,14 +218,22 @@ class CategoryDetailFragment : Fragment(), View.OnClickListener {
 
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         CategoryDetailNewsList.clear()
+
         if(body.isNullOrEmpty()){
 
         }
         else{
             for(item in body){
-                CategoryDetailNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                CategoryDetailNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
-            categorydetailNewsAdapter.notifyDataSetChanged()
+        }
+        categorydetailNewsAdapter.notifyDataSetChanged()
+        if(CategoryDetailNewsList.size in 1..2){
+            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
+        }
+        else if(CategoryDetailNewsList.size == 0){
+            view.categoryIncludeNewsNoBtn.visibility = View.VISIBLE
+            view.categoryIncludeNewsOpenBtn.visibility = View.GONE
         }
     }
 

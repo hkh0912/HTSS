@@ -7,12 +7,13 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="5"
+        android:layout_weight="6"
         android:gravity="left"
-        android:textStyle="bold"
+
         android:padding="10dp"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:fontFamily="@font/one_mobile_pop"
+        android:textSize="13sp"
         android:id="@+id/theme_detail_name"
         android:text="코난 테크놀로지"
          />
@@ -20,12 +21,12 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="4"
         android:gravity="right"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:padding="10dp"
         android:id="@+id/theme_current_value"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textColor="@color/black"
         android:text="20,300"
        />
@@ -33,25 +34,25 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="3.8"
         android:gravity="right"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:id="@+id/theme_detail_minuspercent"
         android:padding="10dp"
-        android:textStyle="bold"
+        android:fontFamily="@font/one_mobile_pop"
         android:text="-3.05%"
-        android:textColor="@color/red" />
+        android:textColor="@color/blue" />
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="3.8"
         android:gravity="right"
-        android:textSize="15sp"
-        android:textStyle="bold"
+        android:textSize="13sp"
+        android:fontFamily="@font/one_mobile_pop"
         android:id="@+id/theme_detail_pluspercent"
         android:padding="10dp"
         android:visibility="gone"
         android:text="+2.73%"
-        android:textColor="@color/blue" />
+        android:textColor="@color/red" />
 
 </LinearLayout>

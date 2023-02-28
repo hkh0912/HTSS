@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htss.Adapter.CategoryListAdapter
@@ -15,7 +16,6 @@ import com.example.htss.Model.MainModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.SectorThemeList
 import com.example.htss.Retrofit.RetrofitClient
-import com.example.htss.databinding.FragmentListBinding
 import com.example.htss.databinding.FragmentSectorListBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,6 +40,14 @@ class SectorListFragment : Fragment() {
         view.recycle4.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = categoryListAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.recycle4.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
+
+
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {

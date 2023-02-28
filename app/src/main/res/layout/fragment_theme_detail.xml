@@ -23,10 +23,11 @@
             />
 
         <LinearLayout
+            android:id="@+id/theme_layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/white"
+            android:background="@drawable/layout_stroke"
             android:elevation="20dp"
             android:orientation="vertical"
             android:padding="10dp">
@@ -42,40 +43,44 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:gravity="center"
-                    android:textColor="@color/black"
                     android:text="쿠팡 관련주"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black"
+                    android:textSize="10pt"
+                    android:fontFamily="@font/one_mobile_pop" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/theme_value_plus"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="+10%"
-                        android:textColor="@color/blue"
-                        android:textSize="6pt"
+                        android:textColor="@color/red"
+                        android:textSize="8pt"
+                        android:fontFamily="@font/one_mobile_pop"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textStyle="bold" />
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                         android:id="@+id/theme_value_minus"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:text="+10%"
+                        android:textColor="@color/blue"
+                        android:textSize="8pt"
+                        android:visibility="gone"
+                        android:fontFamily="@font/one_mobile_pop"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textColor="@color/red"
-                        android:textSize="6pt"
-                        android:visibility="gone"
-                        android:textStyle="bold" />
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -84,70 +89,98 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:background="@drawable/layout_left_stroke"
+                    android:gravity="center"
+                    android:padding="10dp"
                     android:text="종목명"
-                    android:gravity="center"
+                    android:fontFamily="@font/one_mobile_pop"
                     android:textColor="@color/black"
-                    android:padding="10dp"
-                    android:textSize="7pt"
-                    android:background="@drawable/stroke_background"
-                    android:layout_weight="5" />
+                    android:textSize="7pt" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/stroke_background"
+                    android:layout_weight="2.5"
+                    android:background="@drawable/layout_middle_stroke"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:fontFamily="@font/one_mobile_pop"
                     android:text="현재가"
-                    android:gravity="center"
                     android:textColor="@color/black"
-                    android:textSize="7pt"
-                    android:padding="10dp"
-                    android:layout_weight="2"/>
+                    android:textSize="7pt" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전일대비"
+                    android:layout_weight="2"
+                    android:background="@drawable/layout_right_stroke"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:textSize="7pt"
+                    android:text="전일대비"
                     android:textColor="@color/black"
-                    android:background="@drawable/stroke_background"
-                    android:layout_weight="3"/>
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textSize="7pt" />
             </LinearLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/theme_detail1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false"
-                />
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:id="@+id/theme_detail_open_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_background"
+                android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:padding="3dp"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
                 android:text="펼치기"
+                android:fontFamily="@font/one_mobile_pop"
                 android:textColor="@color/black"
-                android:textSize="7pt"/>
+                />
+
             <TextView
                 android:id="@+id/theme_detail_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_background"
+                android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:padding="2dp"
+
+                android:fontFamily="@font/one_mobile_pop"
                 android:text="접기"
                 android:textColor="@color/black"
-                android:textSize="7pt"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/theme_detail_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+
+                android:fontFamily="@font/one_mobile_pop"
+                android:text="테마와 관련된 종목이 없습니다"
+                android:textColor="@color/black"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
                 android:visibility="gone" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/themem_layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/white"
+            android:background="@drawable/layout_stroke"
             android:elevation="20dp"
             android:orientation="vertical"
             android:padding="10dp">
@@ -164,17 +197,19 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:text="쿠팡 관련주"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/one_mobile_pop"
+                    android:textSize="10pt"
+                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="포함된 뉴스"
+                    android:text="이(가)포함된 뉴스"
                     android:textColor="@color/gray"
-                    android:textSize="8pt"
-                    android:textStyle="bold" />
+                    android:textSize="10pt"
+                    android:fontFamily="@font/one_mobile_pop"
+                    />
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -187,22 +222,41 @@
                 android:id="@+id/theme_include_news_open_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_background"
+                android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:padding="3dp"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"
                 android:text="펼치기"
-                android:textSize="7pt" />
+                android:fontFamily="@font/one_mobile_pop"
+                />
             <TextView
                 android:id="@+id/theme_include_news_close_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/stroke_background"
+                android:background="@drawable/rounded_corner2"
                 android:gravity="center"
-                android:padding="2dp"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
                 android:text="접기"
+                android:fontFamily="@font/one_mobile_pop"
                 android:textColor="@color/black"
-                android:textSize="7pt"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/theme_include_news_no_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner2"
+                android:gravity="center"
+                android:layout_marginTop="3dp"
+                android:padding="5dp"
+                android:textSize="18dp"
+                android:text="테마가 포함된 뉴스가 없습니다"
+                android:fontFamily="@font/one_mobile_pop"
+                android:textColor="@color/black"
                 android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>

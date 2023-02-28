@@ -66,4 +66,42 @@ interface IRetrofit {
         @Query("num") num: Int
     ) : Call<SectorThemeLikeList>
 
+    //티커로 종목명 검색
+    @GET("/stock/name")
+    fun getStockNameByTicker(
+        @Query("ticker") ticker: String
+    ) : Call<String>
+
+    //종목명으로 티커 검색
+    @GET("/stock/ticker")
+    fun getTickerByStockName(
+        @Query("company_name") company_name: String
+    ):Call<String>
+
+    //기업개요
+    @GET("/stock/info")
+    fun getCompanyInfo(
+        @Query("ticker") ticker:String
+    ) : Call<CompanyInfoListItem>
+
+
+    @GET("/stock/now-price")
+    fun getStockNowPrice(
+        @Query("ticker") ticker: String
+    ) : Call<StockNowPriceListItem>
+
+    @GET("/stock/high-now-price")
+    fun getStockHighRate(
+        @Query("num") num: Int
+    ) :Call<StockHighRateList>
+
+    @GET("/stock/market")
+    fun getStockMarket(
+        @Query("name") name: String
+    ) :Call<StockMarketList>
+    @GET("/stock/price")
+    fun getStockPrice(
+        @Query("ticker") ticker: String,
+        @Query("num") num: Int
+    ) :Call<StockPriceList>
 }

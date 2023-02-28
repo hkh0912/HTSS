@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htss.Adapter.MainNewsAdapter
 import com.example.htss.Adapter.ThemeDetailListAdapter
 import com.example.htss.Model.CategoryDetailListModel
 import com.example.htss.Model.NewsModel
+import com.example.htss.Model.StockListModel
 import com.example.htss.Model.ThemeDetailListModel
 import com.example.htss.R
 import com.example.htss.Retrofit.Model.KeywordIncludeNewsList
@@ -24,12 +26,13 @@ import kotlinx.android.synthetic.main.fragment_all_list.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.DecimalFormat
 
 
 class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private lateinit var view: FragmentThemeDetailBinding
     private val retrofit = RetrofitClient.create()
-    private var ThemeDetailList = mutableListOf<ThemeDetailListModel>()
+    private var ThemeDetailList = mutableListOf<StockListModel>()
     private var ThemeNewsList = mutableListOf<NewsModel>()
 
 
@@ -38,7 +41,7 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
 
     private var themename = ""
     private var themepercent = ""
-
+    val dec = DecimalFormat("#,###.##")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,6 +74,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         view.themeDetail2.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = themeNewslListAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    view.themeDetail2.context,
+                    LinearLayoutManager(context).orientation
+                )
+            )
         }
 
         view.back2.setOnClickListener {
@@ -78,12 +87,13 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
         }
         themeDetailListAdapter.setItemClickListener(object : ThemeDetailListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                Log.d("주식", ThemeDetailList[position].ThemeName)
+                Log.d("주식", ThemeDetailList[position].StockName)
                 val bundle = Bundle()
                 bundle.apply {
-                    putString("stock_name", ThemeDetailList[position].ThemeName)
-                    putString("stock_percent", ThemeDetailList[position].Themepercent)
-                    putString("stock_price", ThemeDetailList[position].ThemePrice)
+                    putString("stock_ticker", ThemeDetailList[position].ticker)
+                    putString("stock_name", ThemeDetailList[position].StockName)
+                    putString("stock_percent", ThemeDetailList[position].StockPercent)
+                    putString("stock_price", ThemeDetailList[position].StockPrice)
                 }
                 replaceFragment(StockFragment(), bundle)
             }
@@ -93,7 +103,12 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
             override fun onClick(v: View, position: Int) {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(ThemeNewsList[position].rink)))
             }
+        })
 
+        themeNewslListAdapter.setLinkClickListener(object : MainNewsAdapter.OnLinkClickListener{
+            override fun onClick(v: View, position: Int) {
+                getStockNameByTicker(ThemeNewsList[position].ticker)
+            }
         })
 
         getThemeInclude(themename,3)
@@ -127,28 +142,63 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     }
     private fun addSectorthemeIncludeList(body: SectorThemeIncludeList?){
         ThemeDetailList.clear()
-        if(body != null){
+        if(body.isNullOrEmpty()){
+
+        }
+        else{
             for(item in body) {
                 if (item.rate >= 0.0) {
                     ThemeDetailList.add(
-                        ThemeDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            "+" + item.rate.toString() + "%",
-                            item.end_price.toString()
+                            dec.format(item.end_price).toString(),
+                            "+" + item.rate.toString() + "%"
                         )
                     )
                 }
                 else{
                     ThemeDetailList.add(
-                        ThemeDetailListModel(
+                        StockListModel(
+                            item.ticker,
                             item.company_name,
-                            item.rate.toString()+"%",
-                            item.end_price.toString())
+                            dec.format(item.end_price).toString(),
+                            item.rate.toString()+"%"
                         )
+                    )
                 }
             }
         }
         themeDetailListAdapter.notifyDataSetChanged()
+        if(ThemeDetailList.size in 1..2 ){
+            view.themeDetailOpenBtn.visibility = View.GONE
+        }
+        else if(ThemeDetailList.size == 0){
+            view.themeDetailOpenBtn.visibility = View.GONE
+            view.themeDetailNoBtn.visibility = View.VISIBLE
+        }
+    }
+    fun getStockNameByTicker(ticker: String){
+        retrofit.getStockNameByTicker(ticker).enqueue(object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if(response.code() == 200){
+                    if(!response.body().isNullOrBlank()){
+                        val bundle = Bundle()
+                        bundle.putString("stock_ticker", ticker)
+                        bundle.putString("stock_name", response.body())
+                        Log.d("keywordfragment",response.body().toString())
+                        replaceFragment(StockFragment(), bundle)
+                    } else {
+                        Toast.makeText(requireContext(),"일치하는 종목이 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else Toast.makeText(requireContext(),"오류가 발생하였습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(),"일치하는 종목이 없습니다.\n다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
     fun getSectorThemeKeywordIncludeNews(keyword: String, num: Int){
         retrofit.getSectorThemeKeywordIncludeNews(keyword, num).enqueue(object: Callback<KeywordIncludeNewsList> {
@@ -172,20 +222,21 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
     private fun addSectorthemeIncludeNewsList(body: KeywordIncludeNewsList?){
         ThemeNewsList.clear()
         if(body.isNullOrEmpty()){
-
         }
         else{
             for(item in body){
-                ThemeNewsList.add(NewsModel("관련 종목코드: "+item.ticker,item.provider,item.date,item.rink,item.title))
+                ThemeNewsList.add(NewsModel(item.ticker,item.provider,item.date,item.rink,item.title,item.sentiment))
             }
-            themeNewslListAdapter.notifyDataSetChanged()
+        }
+        themeNewslListAdapter.notifyDataSetChanged()
+        if(ThemeNewsList.size in 1..2){
+            view.themeIncludeNewsOpenBtn.visibility = View.GONE
+        }
+        else if(ThemeNewsList.size == 0){
+            view.themeIncludeNewsOpenBtn.visibility = View.GONE
+            view.themeIncludeNewsNoBtn.visibility = View.VISIBLE
         }
     }
-
-
-
-
-
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
@@ -213,14 +264,11 @@ class ThemeDetailFragment : Fragment(),View.OnClickListener {
                 getSectorThemeKeywordIncludeNews(themename,10)
                 view.themeIncludeNewsCloseBtn.visibility = View.VISIBLE
                 view.themeIncludeNewsOpenBtn.visibility = View.GONE
-                Log.d("g", "흠")
-
             }
             R.id.theme_include_news_close_btn -> {
                 getSectorThemeKeywordIncludeNews(themename,3)
                 view.themeIncludeNewsCloseBtn.visibility = View.GONE
                 view.themeIncludeNewsOpenBtn.visibility = View.VISIBLE
-                Log.d("E","하")
             }
         }
     }
