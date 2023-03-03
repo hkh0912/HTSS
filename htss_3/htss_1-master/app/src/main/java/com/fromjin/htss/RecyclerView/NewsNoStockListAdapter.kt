@@ -30,7 +30,7 @@ class NewsNoStockListAdapter(val itemList: MutableList<NewsInfo>) :
     override fun onBindViewHolder(holder: NewsNoStockListAdapter.ViewHolder, position: Int) {
         holder.content.text = itemList[position].title
         holder.provider.text = itemList[position].provider
-        val dateFormat = "yyyy-MM-dd"
+        val dateFormat = "MM.dd"
         holder.date.text = SimpleDateFormat(dateFormat).format(itemList[position].date)
         holder.link.setOnClickListener {
             linkClickListener.onClick(it, position)

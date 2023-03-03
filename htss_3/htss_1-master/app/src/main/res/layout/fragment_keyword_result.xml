@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.KeywordResultFragment">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +30,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="키워드"
-                android:textColor="@color/navy"
+                android:textColor="@color/orange"
                 android:textSize="8pt"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -44,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@color/white"
-            android:elevation="20dp"
+            android:elevation="10dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -54,7 +52,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="업종"
-                android:textColor="@color/brown"
+                android:textColor="@color/dark_brown"
                 android:textSize="8pt"
                 android:textStyle="bold" />
 
@@ -93,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@color/white"
-            android:elevation="20dp"
+            android:elevation="10dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -103,7 +101,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="테마"
-                android:textColor="@color/brown"
+                android:textColor="@color/dark_brown"
                 android:textSize="8pt"
                 android:textStyle="bold" />
 
@@ -142,7 +140,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@color/white"
-            android:elevation="20dp"
+            android:elevation="10dp"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -157,7 +155,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="키워드"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/orange"
                     android:textSize="8pt"
                     android:textStyle="bold" />
                 <TextView
@@ -166,7 +164,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="(와)과 같이 언급된 주식"
-                    android:textColor="@color/brown"
+                    android:textColor="@color/dark_brown"
                     android:textSize="8pt"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -206,8 +204,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@color/white"
-            android:elevation="20dp"
             android:orientation="vertical"
             android:padding="10dp">
             <LinearLayout
@@ -221,7 +217,7 @@
                     android:layout_margin="5dp"
                     android:gravity="center"
                     android:text="키워드"
-                    android:textColor="@color/navy"
+                    android:textColor="@color/orange"
                     android:textSize="8pt"
                     android:textStyle="bold" />
                 <TextView
@@ -230,7 +226,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="(이)가 포함된 뉴스"
-                    android:textColor="@color/brown"
+                    android:textColor="@color/dark_brown"
                     android:textSize="8pt"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -265,4 +261,4 @@
 
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

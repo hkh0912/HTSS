@@ -3,11 +3,14 @@ package com.fromjin.htss.Fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -59,6 +62,12 @@ class KeywordResultFragment : Fragment() {
     ): View? {
 
         view = FragmentKeywordResultBinding.inflate(inflater, container, false)
+
+
+
+
+
+
 
         keyword = arguments?.getString("keyword").toString()
         type = arguments?.getInt("type")!!
@@ -113,12 +122,12 @@ class KeywordResultFragment : Fragment() {
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = newsListAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    view.newsRecyclerview.context,
-                    LinearLayoutManager(context).orientation
-                )
-            )
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    view.newsRecyclerview.context,
+//                    LinearLayoutManager(context).orientation
+//                )
+//            )
         }
 
         sectorListAdapter.setItemClickListener(object : RankListAdapter.OnItemClickListener {
@@ -180,6 +189,7 @@ class KeywordResultFragment : Fragment() {
 
         return view.root
     }
+
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
         fragment.arguments = bundle
@@ -309,6 +319,7 @@ class KeywordResultFragment : Fragment() {
                     )
                 )
             }
+            if(newsLikeList.count()<3) view.newsOpenBtn.visibility = View.GONE
             newsListAdapter.notifyDataSetChanged()
         }
         Log.d("검색결과", "검색결과3")
@@ -338,6 +349,7 @@ class KeywordResultFragment : Fragment() {
                     }
                 }
                 Log.d("API결과리스트", sectorLikeList.toString())
+                if(sectorLikeList.count()<3) view.categoryOpenBtn.visibility = View.GONE
                 sectorListAdapter.notifyDataSetChanged()
             }
             "theme" -> {
@@ -361,6 +373,7 @@ class KeywordResultFragment : Fragment() {
                     }
                 }
                 Log.d("API결과리스트", themeLikeList.toString())
+                if(themeLikeList.count()<3) view.themeOpenBtn.visibility = View.GONE
                 themeListAdapter.notifyDataSetChanged()
             }
         }
@@ -397,6 +410,7 @@ class KeywordResultFragment : Fragment() {
             }
         }
         Log.d("API결과리스트", stockRankList.toString())
+        if(stockRankList.count()<3) view.stockOpenBtn.visibility = View.GONE
         stockListAdapter.notifyDataSetChanged()
     }
 }

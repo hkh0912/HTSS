@@ -154,9 +154,10 @@ class ThemeResultFragment : Fragment(), View.OnClickListener {
             for (item in body) {
                 newsList.add(NewsInfo(item.ticker, item.provider, item.date, item.title, item.rink))
             }
+            if(newsList.count()<3) view.stockOpenBtn.visibility = View.GONE
             newsListAdapter.notifyDataSetChanged()
         } else {
-
+            view.newsOpenBtn.text = "테마 관련 뉴스가 없습니다."
         }
     }
 
@@ -167,11 +168,12 @@ class ThemeResultFragment : Fragment(), View.OnClickListener {
                 if(item.rate >= 0.0) stockList.add(StockInfo(item.ticker, item.company_name, "+${item.rate}%", item.end_price))
                 else stockList.add(StockInfo(item.ticker, item.company_name, "${item.rate}%", item.end_price))
             }
-
+            if(stockList.count()<3) view.stockOpenBtn.visibility = View.GONE
+            stockListAdapter.notifyDataSetChanged()
         } else{
-
+            view.stockOpenBtn.text = "테마 관련 종목이 없습니다."
         }
-        stockListAdapter.notifyDataSetChanged()
+
     }
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {

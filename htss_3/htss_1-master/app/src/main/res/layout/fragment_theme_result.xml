@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Fragment.ThemeResultFragment">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -68,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@color/white"
-        android:elevation="20dp"
+        android:elevation="10dp"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -78,8 +80,7 @@
             android:layout_margin="5dp"
             android:gravity="center"
             android:text="관련 종목"
-            android:textColor="@color/brown"
-            android:textSize="8pt"
+            android:textColor="@color/dark_brown"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -94,7 +95,6 @@
                 android:background="@drawable/stroke_background"
                 android:gravity="center"
                 android:padding="5dp"
-                android:textSize="7pt"
                 android:text="종목명"
 
                 android:textColor="@color/brown" />
@@ -107,7 +107,6 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="현재가"
-                android:textSize="7pt"
                 android:textColor="@color/brown" />
 
             <TextView
@@ -118,7 +117,6 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:text="전일대비"
-                android:textSize="7pt"
                 android:textColor="@color/brown" />
 
         </LinearLayout>
@@ -136,8 +134,7 @@
             android:background="@drawable/stroke_background"
             android:gravity="center"
             android:padding="3dp"
-            android:text="펼치기"
-            android:textSize="7pt" />
+            android:text="펼치기" />
 
         <TextView
             android:id="@+id/stock_close_btn"
@@ -147,7 +144,6 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="접기"
-            android:textSize="7pt"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -156,8 +152,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@color/white"
-        android:elevation="20dp"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -173,8 +167,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="출판"
-                android:textColor="@color/brown"
-                android:textSize="8pt"
+                android:textColor="@color/orange"
                 android:textStyle="bold" />
 
             <TextView
@@ -182,8 +175,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="(이)가 포함된 뉴스"
-                android:textColor="@color/navy"
-                android:textSize="8pt"
+                android:textColor="@color/dark_brown"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -201,8 +193,7 @@
             android:background="@drawable/stroke_background"
             android:gravity="center"
             android:padding="3dp"
-            android:text="펼치기"
-            android:textSize="7pt" />
+            android:text="펼치기" />
 
         <TextView
             android:id="@+id/news_close_btn"
@@ -212,8 +203,9 @@
             android:gravity="center"
             android:padding="2dp"
             android:text="접기"
-            android:textSize="7pt"
             android:visibility="gone" />
     </LinearLayout>
-
 </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

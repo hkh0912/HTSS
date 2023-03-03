@@ -87,12 +87,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = newsListAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    view.newsRecyclerview.context,
-                    LinearLayoutManager(context).orientation
-                )
-            )
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    view.newsRecyclerview.context,
+//                    LinearLayoutManager(context).orientation
+//                )
+//            )
         }
 
         sectorListAdapter.setItemClickListener(object : RankListAdapter.OnItemClickListener {

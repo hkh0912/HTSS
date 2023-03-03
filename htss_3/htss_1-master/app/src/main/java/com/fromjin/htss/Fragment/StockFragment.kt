@@ -27,7 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class StockFragment : Fragment() {
+class   StockFragment : Fragment() {
 
     private lateinit var view: FragmentStockBinding
     private val retrofit = RetrofitClient.create()

@@ -2,7 +2,6 @@ package com.fromjin.htss.Activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.fromjin.htss.Fragment.AllListFragment
@@ -17,8 +16,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var view:ActivityMainBinding
 
     val home = HomeFragment()
-    val list = AllListFragment()
-    val setting = SettingFragment()
+//    val list = AllListFragment()
+//    val setting = SettingFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,15 +39,15 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                 replaceFragment(home)
             }
-            R.id.list -> {
+            //R.id.list -> {
 //                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, AllListFragment::class.java.name)
 //                replaceFragment(fragment)
-                replaceFragment(list)
-            }
-            R.id.setting -> {
+            //    replaceFragment(list)
+            //}
+            R.id.chatbot -> {
 //                val fragment = supportFragmentManager.fragmentFactory.instantiate(classLoader, SettingFragment::class.java.name)
 //                replaceFragment(fragment)
-                replaceFragment(setting)
+//                replaceFragment(setting)
             }
         }
         return false

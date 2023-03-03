@@ -76,12 +76,12 @@ class SectorResultFragment : Fragment(), View.OnClickListener {
         view.newsRecyclerview.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = newsListAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    view.newsRecyclerview.context,
-                    LinearLayoutManager(context).orientation
-                )
-            )
+//            addItemDecoration(
+//                DividerItemDecoration(
+//                    view.newsRecyclerview.context,
+//                    LinearLayoutManager(context).orientation
+//                )
+//            )
         }
 
         stockListAdapter.setItemClickListener(object : StockListAdapter.OnItemClickListener{
@@ -160,9 +160,10 @@ class SectorResultFragment : Fragment(), View.OnClickListener {
             for (item in body) {
                 newsList.add(NewsInfo(item.ticker, item.provider, item.date, item.title, item.rink))
             }
+            if(newsList.count()<3) view.newsOpenBtn.visibility = View.GONE
             newsListAdapter.notifyDataSetChanged()
         } else {
-
+            view.newsOpenBtn.text = "업종 관련 뉴스가 없습니다."
         }
     }
 
@@ -173,11 +174,12 @@ class SectorResultFragment : Fragment(), View.OnClickListener {
                 if(item.rate >= 0.0) stockList.add(StockInfo(item.ticker, item.company_name, "+${item.rate}%", item.end_price))
                 else stockList.add(StockInfo(item.ticker, item.company_name, "${item.rate}%", item.end_price))
             }
-
+            if(stockList.count()<3) view.stockOpenBtn.visibility = View.GONE
+            stockListAdapter.notifyDataSetChanged()
         } else{
-
+            view.stockOpenBtn.text ="업종 해당 종목이 없습니다."
         }
-        stockListAdapter.notifyDataSetChanged()
+
     }
 
     private fun replaceFragment(fragment: Fragment, bundle: Bundle) {
